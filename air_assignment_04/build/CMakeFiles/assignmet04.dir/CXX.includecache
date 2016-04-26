@@ -1,0 +1,50 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/agent.hpp
+vector
+-
+utility
+-
+string
+-
+
+../include/environment.hpp
+iostream
+-
+fstream
+-
+string
+-
+vector
+-
+
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/agent.cpp
+agent.hpp
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/agent.hpp
+iostream
+-
+stack
+-
+queue
+-
+chrono
+-
+thread
+-
+
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/environment.cpp
+environment.hpp
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/environment.hpp
+agent.hpp
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/agent.hpp
+
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/main.cpp
+environment.hpp
+/home/kv/Downloads/Assignments/AIR/Week 4/air_assignment_04/air_assignment_04/src/environment.hpp
+
