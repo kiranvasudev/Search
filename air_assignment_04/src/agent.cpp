@@ -1,5 +1,5 @@
 /*
- * Daniel Vázquez
+ * Daniel Vázquez, Kiran Vasudev, Patrick Nagel
  * Aritifiacial Intelligence for Robots
  * MAS SS 2016
  * Assignment 3
@@ -60,6 +60,7 @@ void Agent::print_map() {
 
 // Here is something to do
 void Agent::bfs() {
+
 	//queue stores a pair in the form (row, col)
 	queue<pair<int, int> > nodes_queue;
 	pair<int, int> current_node;
@@ -81,6 +82,7 @@ void Agent::bfs() {
 
 	nodes_queue.push(make_pair(initial_pos.first, initial_pos.second));
 	number_of_stored_nodes++;
+	number_of_visited_nodes++;
 
 	while (goal_positions.size() < number_of_goals && nodes_queue.size() > 0) {
 
@@ -98,7 +100,7 @@ void Agent::bfs() {
 
 		if (map[row][col] == "*") {
 			goal_positions.push_back(current_node);
-//			number_of_goals++;
+
 		}
 
 		if (right_child == " " || right_child == "*") {
@@ -138,6 +140,7 @@ void Agent::bfs() {
 		}
 
 		map[row][col] = "~";
+
 		//TODO
 		/*Note: If the current node contains a dirt you can
 		 * store the position in the goal_positions vector
