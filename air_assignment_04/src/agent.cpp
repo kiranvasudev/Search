@@ -58,10 +58,20 @@ void Agent::print_map() {
 
 }
 
+// Here is something to do
 void Agent::bfs() {
 	//queue stores a pair in the form (row, col)
 	queue<pair<int, int> > nodes_queue;
 	pair<int, int> current_node;
+
+	std::string right_child;
+	std::string left_child;
+	std::string up_child;
+	std::string down_child;
+
+	int row;
+	int col;
+
 	//Note: Elements stored in a pair can be accessed by calling the .first and .second attributes. E.g:
 	//int row = current_node.first
 	//int col = current_node.second
@@ -75,16 +85,75 @@ void Agent::bfs() {
 	while (nodes_queue.size() > 0) {
 
 		current_node = nodes_queue.front();
+		number_of_visited_nodes++;
 		nodes_queue.pop();
 
+		row = current_node.first;
+		col = current_node.second;
+
+		right_child = map[row][col + 1];
+		left_child = map[row][col - 1];
+		up_child = map[row + 1][col];
+		down_child = map[row - 1][col];
+
+		if (map[row][col] == "*") {
+			goal_positions.push_back(current_node);
+			number_of_goals++;
+		}
+
+		if (right_child == " " || right_child == "*") {
+			nodes_queue.push(make_pair(current_node.first, current_node.second + 1));
+			number_of_stored_nodes++;
+		}
+
+		if (left_child == " " || left_child == "*") {
+			nodes_queue.push(make_pair(current_node.first, current_node.second - 1));
+			number_of_stored_nodes++;
+		}
+
+		if (up_child == " " || up_child == "*") {
+			nodes_queue.push(make_pair(current_node.first + 1, current_node.second));
+			number_of_stored_nodes++;
+		}
+
+		if (down_child == " " || down_child == "*") {
+			nodes_queue.push(make_pair(current_node.first - 1, current_node.second));
+			number_of_stored_nodes++;
+		}
+//		if (map[row][col + 1] == " " || map[row][col + 1] == "*") {
+//			nodes_queue.push(
+//					make_pair(current_node.first, current_node.second + 1));
+//			number_of_stored_nodes++;
+//		}
+//		if (map[row][col - 1] == " ") {
+//			nodes_queue.push(
+//					make_pair(current_node.first, current_node.second - 1));
+//			number_of_stored_nodes++;
+//		}
+//
+//		if (map[row][col + 1] != " " && map[row][col - 1] != " ") {
+//			if (map[row - 1][col] == " ") {
+//				nodes_queue.push(
+//						make_pair(current_node.first - 1, current_node.second));
+//				number_of_stored_nodes++;
+//			} else {
+//				if (map[row + 1][col] == " ") {
+//					nodes_queue.push(
+//							make_pair(current_node.first + 1,
+//									current_node.second));
+//					number_of_stored_nodes++;
+//				}
+//			}
+//		}
+
+		map[row][col] = "~";
 		//TODO
 		/*Note: If the current node contains a dirt you can
-		 * store the position in the goal_positions vector 
+		 * store the position in the goal_positions vector
 		 * by calling the push method e.g goal_positions.push(current_node)
 		 */
 
 		print_map();
-
 	}
 
 	print_evaluation_metrics("queue");
@@ -109,8 +178,8 @@ void Agent::dfs() {
 		nodes_stack.pop();
 
 		//TODO
-		/*Note: If the current node contains a dirt you can 
-		 * store the position in the goal_positions vector 
+		/*Note: If the current node contains a dirt you can
+		 * store the position in the goal_positions vector
 		 * by calling the push method e.g goal_positions.push(current_node)
 		 */
 
