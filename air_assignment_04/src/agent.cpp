@@ -82,7 +82,7 @@ void Agent::bfs() {
 	nodes_queue.push(make_pair(initial_pos.first, initial_pos.second));
 	number_of_stored_nodes++;
 
-	while (nodes_queue.size() > 0) {
+	while (goal_positions.size() < number_of_goals && nodes_queue.size() > 0) {
 
 		current_node = nodes_queue.front();
 		number_of_visited_nodes++;
@@ -98,53 +98,44 @@ void Agent::bfs() {
 
 		if (map[row][col] == "*") {
 			goal_positions.push_back(current_node);
-			number_of_goals++;
+//			number_of_goals++;
 		}
 
 		if (right_child == " " || right_child == "*") {
-			nodes_queue.push(make_pair(current_node.first, current_node.second + 1));
+			nodes_queue.push(
+					make_pair(current_node.first, current_node.second + 1));
+			if (right_child != "*") {
+				map[row][col + 1] = ".";
+			}
 			number_of_stored_nodes++;
 		}
 
 		if (left_child == " " || left_child == "*") {
-			nodes_queue.push(make_pair(current_node.first, current_node.second - 1));
+			nodes_queue.push(
+					make_pair(current_node.first, current_node.second - 1));
+			if (left_child != "*") {
+				map[row][col - 1] = ".";
+			}
 			number_of_stored_nodes++;
 		}
 
 		if (up_child == " " || up_child == "*") {
-			nodes_queue.push(make_pair(current_node.first + 1, current_node.second));
+			nodes_queue.push(
+					make_pair(current_node.first + 1, current_node.second));
+			if (up_child != "*") {
+				map[row + 1][col] = ".";
+			}
 			number_of_stored_nodes++;
 		}
 
 		if (down_child == " " || down_child == "*") {
-			nodes_queue.push(make_pair(current_node.first - 1, current_node.second));
+			nodes_queue.push(
+					make_pair(current_node.first - 1, current_node.second));
+			if (down_child != "*") {
+				map[row - 1][col] = ".";
+			}
 			number_of_stored_nodes++;
 		}
-//		if (map[row][col + 1] == " " || map[row][col + 1] == "*") {
-//			nodes_queue.push(
-//					make_pair(current_node.first, current_node.second + 1));
-//			number_of_stored_nodes++;
-//		}
-//		if (map[row][col - 1] == " ") {
-//			nodes_queue.push(
-//					make_pair(current_node.first, current_node.second - 1));
-//			number_of_stored_nodes++;
-//		}
-//
-//		if (map[row][col + 1] != " " && map[row][col - 1] != " ") {
-//			if (map[row - 1][col] == " ") {
-//				nodes_queue.push(
-//						make_pair(current_node.first - 1, current_node.second));
-//				number_of_stored_nodes++;
-//			} else {
-//				if (map[row + 1][col] == " ") {
-//					nodes_queue.push(
-//							make_pair(current_node.first + 1,
-//									current_node.second));
-//					number_of_stored_nodes++;
-//				}
-//			}
-//		}
 
 		map[row][col] = "~";
 		//TODO
