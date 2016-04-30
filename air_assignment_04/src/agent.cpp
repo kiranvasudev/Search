@@ -182,7 +182,7 @@ void Agent::dfs() {
 	nodes_stack.push(make_pair(initial_pos.first, initial_pos.second));
 	number_of_stored_nodes++;
 
-	while (nodes_stack.size() > 0) {
+	while (nodes_stack.size() > 0 && goal_positions.size() < number_of_goals) {
 
 		current_node = nodes_stack.top();
 		number_of_visited_nodes++;
