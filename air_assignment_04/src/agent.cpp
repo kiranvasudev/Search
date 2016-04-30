@@ -19,6 +19,7 @@
 #include <ctime>
 
 using namespace std;
+using namespace std::chrono;
 
 Agent::Agent(vector<vector<string> > map, const pair<int, int> initial_pos,
 		int number_of_goals, int search_option) :
@@ -63,7 +64,7 @@ void Agent::print_map() {
 // Here is something to do
 void Agent::bfs() {
 
-	clock_t begin = clock();
+	high_resolution_clock::time_point t1 = high_resolution_clock::now();
 
 	//queue stores a pair in the form (row, col)
 	queue<pair<int, int> > nodes_queue;
@@ -140,10 +141,11 @@ void Agent::bfs() {
 		print_map();
 	}
 
-	clock_t end = clock();
-	double elapsed_secs = (double) (clock() - begin) / CLOCKS_PER_SEC;
+	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+	auto duration = duration_cast<seconds>( t2 - t1 ).count();
+
 	print_evaluation_metrics("queue");
-	cout << "Time: " << elapsed_secs << endl;
+	cout << "Execution time: " << duration << "sec"<< endl;
 }
 
 void Agent::dfs() {
