@@ -91,6 +91,9 @@ void Agent::bfs() {
 }
 
 void Agent::dfs() {
+
+	high_resolution_clock::time_point t1 = high_resolution_clock::now();
+
 	//the stack stores a pair in the form (row, col)
 	stack<pair<int, int> > nodes_stack;
 	pair<int, int> current_node;
@@ -161,7 +164,11 @@ void Agent::dfs() {
 		print_map();
 	}
 
+	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+	auto duration = duration_cast<seconds>( t2 - t1 ).count();
+
 	print_evaluation_metrics("stack");
+	cout << "Execution time: " << duration << "sec" << endl;
 
 }
 
