@@ -16,13 +16,15 @@
 #include <chrono>
 #include <thread>
 
+#include <ctime>
+
 using namespace std;
 
 Agent::Agent(vector<vector<string> > map, const pair<int, int> initial_pos,
 		int number_of_goals, int search_option) :
 		map(map), initial_pos(initial_pos), number_of_goals(number_of_goals), search_option(
 				search_option), number_of_stored_nodes(0), number_of_visited_nodes(
-				0) {
+				0){
 
 }
 
@@ -61,6 +63,8 @@ void Agent::print_map() {
 // Here is something to do
 void Agent::bfs() {
 
+	clock_t begin = clock();
+
 	//queue stores a pair in the form (row, col)
 	queue<pair<int, int> > nodes_queue;
 	pair<int, int> current_node;
@@ -73,16 +77,8 @@ void Agent::bfs() {
 	int row;
 	int col;
 
-	//Note: Elements stored in a pair can be accessed by calling the .first and .second attributes. E.g:
-	//int row = current_node.first
-	//int col = current_node.second
-
-	//Add the initial node to the queue
-	//Note: To add a new pair to the queue you can use the std::make_pair method e.g:
-
 	nodes_queue.push(make_pair(initial_pos.first, initial_pos.second));
 	number_of_stored_nodes++;
-	number_of_visited_nodes++;
 
 	while (goal_positions.size() < number_of_goals && nodes_queue.size() > 0) {
 
@@ -141,16 +137,13 @@ void Agent::bfs() {
 
 		map[row][col] = "~";
 
-		//TODO
-		/*Note: If the current node contains a dirt you can
-		 * store the position in the goal_positions vector
-		 * by calling the push method e.g goal_positions.push(current_node)
-		 */
-
 		print_map();
 	}
 
+	clock_t end = clock();
+	double elapsed_secs = (double) (clock() - begin) / CLOCKS_PER_SEC;
 	print_evaluation_metrics("queue");
+	cout << "Time: " << elapsed_secs << endl;
 }
 
 void Agent::dfs() {
