@@ -116,7 +116,7 @@ void Agent::bfs() {
 			nodes_queue.push(
 					make_pair(current_node.first, current_node.second + 1));
 			if (right_child != "*") {
-				map[row][col + 1] = ".";
+				map[row][col + 1] = "1";
 			}
 			number_of_stored_nodes++;
 		}
@@ -125,7 +125,7 @@ void Agent::bfs() {
 			nodes_queue.push(
 					make_pair(current_node.first, current_node.second - 1));
 			if (left_child != "*") {
-				map[row][col - 1] = ".";
+				map[row][col - 1] = "1";
 			}
 			number_of_stored_nodes++;
 		}
@@ -134,7 +134,7 @@ void Agent::bfs() {
 			nodes_queue.push(
 					make_pair(current_node.first + 1, current_node.second));
 			if (up_child != "*") {
-				map[row + 1][col] = ".";
+				map[row + 1][col] = "1";
 			}
 			number_of_stored_nodes++;
 		}
@@ -143,12 +143,12 @@ void Agent::bfs() {
 			nodes_queue.push(
 					make_pair(current_node.first - 1, current_node.second));
 			if (down_child != "*") {
-				map[row - 1][col] = ".";
+				map[row - 1][col] = "1";
 			}
 			number_of_stored_nodes++;
 		}
 
-		map[row][col] = "~";
+		map[row][col] = "0";
 
 		print_map();
 	}
