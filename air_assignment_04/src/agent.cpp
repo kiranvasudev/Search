@@ -17,6 +17,7 @@
 #include <thread>
 
 using namespace std;
+using namespace std::chrono;
 
 Agent::Agent(vector<vector<string> > map, const pair<int, int> initial_pos,
 		int number_of_goals, int search_option) :
