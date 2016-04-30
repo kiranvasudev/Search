@@ -12,7 +12,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
-
+#include <stdlib.h>
 #include <chrono>
 #include <thread>
 
@@ -149,6 +149,9 @@ void Agent::bfs() {
 }
 
 void Agent::dfs() {
+
+	high_resolution_clock::time_point t1 = high_resolution_clock::now();
+
 	//the stack stores a pair in the form (row, col)
 	stack<pair<int, int> > nodes_stack;
 	pair<int, int> current_node;
@@ -164,8 +167,52 @@ void Agent::dfs() {
 	while (nodes_stack.size() > 0) {
 
 		current_node = nodes_stack.top();
+		number_of_visited_nodes++;
 		nodes_stack.pop();
 
+		//get the (row, column) pair of the current node
+		int row = current_node.first;
+		int col = current_node.second;
+
+		//check for goal state and add position to "goal_positions"
+		if (map[row][col] == "*") {
+			goal_positions.push_back(make_pair(row, col));
+		}
+
+		//checks the neightbors of the current node if it is unvisited or not, pushes it to the stack and marks it visited
+		if (map[row][col + 1] == " " || map[row][col + 1] == "*") {
+			nodes_stack.push(make_pair(row, col + 1));
+			if (map[row][col + 1] != "*") {
+				map[row][col + 1] = "1";
+			}
+			number_of_stored_nodes++;
+		}
+
+		if (map[row][col - 1] == " " || map[row][col - 1] == "*") {
+			nodes_stack.push(make_pair(row, col - 1));
+			if (map[row][col - 1] != "*") {
+				map[row][col - 1] = "1";
+			}
+			number_of_stored_nodes++;
+		}
+
+		if (map[row + 1][col] == " " || map[row + 1][col] == "*") {
+			nodes_stack.push(make_pair(row + 1, col));
+			if (map[row + 1][col] != "*") {
+				map[row + 1][col] = "1";
+			}
+			number_of_stored_nodes++;
+		}
+
+		if (map[row - 1][col] == " " || map[row - 1][col] == "*") {
+			nodes_stack.push(make_pair(row - 1, col));
+			if (map[row - 1][col] != "*") {
+				map[row - 1][col] = "1";
+			}
+			number_of_stored_nodes++;
+		}
+
+		map[row][col] = "0";
 		//TODO
 		/*Note: If the current node contains a dirt you can
 		 * store the position in the goal_positions vector
@@ -173,10 +220,13 @@ void Agent::dfs() {
 		 */
 
 		print_map();
-
 	}
 
+	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+	auto duration = duration_cast<seconds>( t2 - t1 ).count();
+
 	print_evaluation_metrics("stack");
+	cout << "Execution time: " << duration << "sec" << endl;
 
 }
 
