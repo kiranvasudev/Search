@@ -64,20 +64,28 @@ void Agent::print_map() {
 // Here is something to do
 void Agent::bfs() {
 
+	//get the start of exectution time
 	high_resolution_clock::time_point t1 = high_resolution_clock::now();
 
-	//queue stores a pair in the form (row, col)
+	//the queue stores a pair in the form (row, col)
 	queue<pair<int, int> > nodes_queue;
 	pair<int, int> current_node;
+	//Note: Elements stored in a pair can be accessed by calling the .first and .second attributes. E.g:
+	//int row = current_node.first
+	//int col = current_node.second
 
+	//variables for the child nodes
 	std::string right_child;
 	std::string left_child;
 	std::string up_child;
 	std::string down_child;
 
+	//variables for the position (row, column) of a node
 	int row;
 	int col;
 
+	//Add the initial node to the queue
+	//Note: To add a new pair to the queue you can use the std::make_pair method e.g:
 	nodes_queue.push(make_pair(initial_pos.first, initial_pos.second));
 	number_of_stored_nodes++;
 
@@ -87,19 +95,23 @@ void Agent::bfs() {
 		number_of_visited_nodes++;
 		nodes_queue.pop();
 
+		//get the (row, column) pair of the current node
 		row = current_node.first;
 		col = current_node.second;
 
+		//get the children nodes of the current node
 		right_child = map[row][col + 1];
 		left_child = map[row][col - 1];
 		up_child = map[row + 1][col];
 		down_child = map[row - 1][col];
 
+		//check for goal state and add position to "goal_positions"
 		if (map[row][col] == "*") {
 			goal_positions.push_back(current_node);
 
 		}
 
+		//checks the neightbors of the current node if they are marked or visited, if not push them to the queue and mark them
 		if (right_child == " " || right_child == "*") {
 			nodes_queue.push(
 					make_pair(current_node.first, current_node.second + 1));
@@ -141,15 +153,21 @@ void Agent::bfs() {
 		print_map();
 	}
 
+	//get the end of execution time
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+
+	//the difference between start and end time is the duration of the search
 	auto duration = duration_cast<seconds>( t2 - t1 ).count();
 
 	print_evaluation_metrics("queue");
+
+	//print the execution time of the search
 	cout << "Execution time: " << duration << "sec"<< endl;
 }
 
 void Agent::dfs() {
 
+	//get the start of exectution time
 	high_resolution_clock::time_point t1 = high_resolution_clock::now();
 
 	//the stack stores a pair in the form (row, col)
@@ -222,10 +240,15 @@ void Agent::dfs() {
 		print_map();
 	}
 
+	//get the end of execution time
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+
+	//the difference between start and end time is the duration of the search
 	auto duration = duration_cast<seconds>( t2 - t1 ).count();
 
 	print_evaluation_metrics("stack");
+
+	//print the execution time of the search
 	cout << "Execution time: " << duration << "sec" << endl;
 
 }
