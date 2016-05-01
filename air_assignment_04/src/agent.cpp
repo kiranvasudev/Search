@@ -25,7 +25,7 @@ Agent::Agent(vector<vector<string> > map, const pair<int, int> initial_pos,
 		int number_of_goals, int search_option) :
 		map(map), initial_pos(initial_pos), number_of_goals(number_of_goals), search_option(
 				search_option), number_of_stored_nodes(0), number_of_visited_nodes(
-				0){
+				0) {
 
 }
 
@@ -106,7 +106,7 @@ void Agent::bfs() {
 		down_child = map[row - 1][col];
 
 		//check for goal state and add position to "goal_positions"
-		if (map[row][col] == "*") {
+		if (map[row][col] == "*" or map[row][col] == "2") {
 			goal_positions.push_back(current_node);
 
 		}
@@ -118,6 +118,9 @@ void Agent::bfs() {
 			if (right_child != "*") {
 				map[row][col + 1] = "1";
 			}
+			if (right_child == "*") {
+				map[row][col + 1] = "2";
+			}
 			number_of_stored_nodes++;
 		}
 
@@ -126,6 +129,9 @@ void Agent::bfs() {
 					make_pair(current_node.first, current_node.second - 1));
 			if (left_child != "*") {
 				map[row][col - 1] = "1";
+			}
+			if (left_child == "*") {
+				map[row][col - 1] = "2";
 			}
 			number_of_stored_nodes++;
 		}
@@ -136,6 +142,9 @@ void Agent::bfs() {
 			if (up_child != "*") {
 				map[row + 1][col] = "1";
 			}
+			if (up_child == "*") {
+				map[row + 1][col] = "2";
+			}
 			number_of_stored_nodes++;
 		}
 
@@ -144,6 +153,9 @@ void Agent::bfs() {
 					make_pair(current_node.first - 1, current_node.second));
 			if (down_child != "*") {
 				map[row - 1][col] = "1";
+			}
+			if (down_child == "*") {
+				map[row - 1][col] = "2";
 			}
 			number_of_stored_nodes++;
 		}
@@ -157,12 +169,12 @@ void Agent::bfs() {
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
 	//the difference between start and end time is the duration of the search
-	auto duration = duration_cast<seconds>( t2 - t1 ).count();
+	auto duration = duration_cast < seconds > (t2 - t1).count();
 
 	print_evaluation_metrics("queue");
 
 	//print the execution time of the search
-	cout << "Execution time: " << duration << "sec"<< endl;
+	cout << "Execution time: " << duration << "sec" << endl;
 }
 
 void Agent::dfs() {
@@ -244,7 +256,7 @@ void Agent::dfs() {
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
 	//the difference between start and end time is the duration of the search
-	auto duration = duration_cast<seconds>( t2 - t1 ).count();
+	auto duration = duration_cast < seconds > (t2 - t1).count();
 
 	print_evaluation_metrics("stack");
 
